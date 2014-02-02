@@ -3,7 +3,7 @@ require 'rubygems'
 require 'sinatra'
 
 # TODO: rewrite it to class
-form = <<TEXT
+Form = <<TEXT
 <form action="/post" method="POST">
 Name: <input name="name" value="" size="10"><br/> 
 Message: <input name="msg" value="" size="140"><br/>
@@ -12,9 +12,7 @@ Message: <input name="msg" value="" size="140"><br/>
 <br/>
 <a href=\"/stream/\">Look a stream!</a>
 TEXT
-form.freeze
-$home = "<a href=\"/\">Go to home!</a>"
-$home.freeze
+Home = "<a href=\"/\">Go to home!</a>"
 # General array of messages
 $msgs = Array.new
 
@@ -47,16 +45,16 @@ def page_messages(n)
 		if (($msgs.length/10)+1 > n)
 			s << "<a href='/stream/#{n+1}'>Next\>\><br/></a>"
 		end
-		s << $home << "<br/>"
+		s << Home << "<br/>"
 	else
-		s = "Page not found!#{$home}"
+		s = "Page not found!#{Home}"
 	end
 	s
 end
 
 get '/' do
 #  draw a form to input message
-	form
+	Form
 end
 
 post '/post' do
@@ -66,12 +64,12 @@ post '/post' do
 	  if params[:msg].length <= 140 and params[:name]. length <= 10
 	    # if every right, added in array messages
 	    $msgs << [h(params[:name]), time,h(params[:msg])]
-	    "Send success!#{$home}"
+	    "Send success!#{Home}"
 	  else
-	    "Error! Big message or name: #{params[:name]} say \"#{params[:msg]}\"<br/>#{$home}}"
+	    "Error! Big message or name: #{params[:name]} say \"#{params[:msg]}\"<br/>#{Home}}"
 	  end
 	else
-	  "Empty!#{$home}"
+	  "Empty!#{Home}"
 	end
 end
 
