@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'rubygems'
+require 'erb'
 require 'sinatra'
 
 # TODO: rewrite it to class
@@ -36,7 +37,8 @@ def page_messages(n)
 	s = String.new
 	if n.integer? and n>0 and $msgs.length >= (n-1) * 10
 		$msgs.reverse[(n*10)-10...n*10].each_with_index do |item, index|
-			s << "#{$msgs.length - index} # Name: #{item[0]}<br/>Time: #{item[1]}<br>Message: #{item[2]}<br/><br/>"
+#			s << "#{$msgs.length - index} # Name: #{item[0]}<br/>Time: #{item[1]}<br>Message: #{item[2]}<br/><br/>"
+			s << (erb :message, :locals => {:index => index, :item=>item})
 		end
 		# added link to next/previous page
 		if (n != 1)
