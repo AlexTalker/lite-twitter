@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 require 'sinatra'
+
+# TODO: rewrite it to class
 form = <<TEXT
 <form action="/post" method="POST">
 Name: <input name="name" value="" size="10"><br> 
@@ -10,38 +12,56 @@ Message: <input name="msg" value="" size="140"><br>
 <br\>
 <a href=\"/stream/\">Look a stream!</a>
 TEXT
+$home = "<a href=\"/\">Go to home!</a>"
+$home.freeze
+# General array of messages
 $msgs = Array.new
 
+# class Stream
+# 	def each
+# #		$msgs.each_with_index { |item, index| yield "#{item[0]}<br/>#{item[1]}<br/>#{item[2]}<br/>---------------------------<br\>"}
+# 		"<a href='/stream/1'>Go to first stream page!</a>"
+# 	end
+# end
+
+def page_messages(n)
+	n = n.to_i
+	s = String.new
+	if n.integer? and n>0 and $msgs.length >= (n-1) * 10
+		$msgs.reverse[(n*10)-10...n*10].each_with_index do |item, index|
+			s << "#{index} # Name: #{item[0]}<br/>Time: #{item[1]}<br>Message: #{item[2]}<br/><br/>"
+		end
+		s << $home << "<br/>"
+	else
+		s = "Page not found!"
+	end
+	s
+end
+
 get '/' do
-#	"<a href=\"/h/Alex\">Press here!</a>"
+#  draw a form to input message
 	form
 end
 
 post '/post' do
+  # check information, sended in form, to valid
+	time = Time.now
 	unless params[:name].empty? and params[:msg].empty?
 	  if params[:msg].length <= 140 and params[:name]. length <= 10
-	    $msgs << [params[:name],params[:msg]]
-	    "Send success!<a href=\"/\">Go to home!</a>"
+	    # if every right, added in array messages
+	    $msgs << [params[:name], time,params[:msg]]
+	    "Send success!#{$home}"
 	  else
-	    "Error! Big message or name: #{params[:name]} say \"#{params[:msg]}\"<br/><a href=\"/\">Go to home!</a>}"
+	    "Error! Big message or name: #{params[:name]} say \"#{params[:msg]}\"<br/>#{$home}}"
 	  end
 	else
-	  "Empty!<a href=\"/\">Go to home!</a>"
+	  "Empty!#{$home}"
 	end
 end
 
-class Stream
-	def each
-		$msgs.each { |i| yield "#{i[0]} say #{i[1]}<br\>" }
-	end
+get '/stream/:page' do
+	page_messages(params[:page])
 end
 
-get('/stream/') { Stream.new }
-
-get '/ty/:name' do
-	"Thank you, #{params[:name]}"
-end
-get '/h/:name' do |n|
-	# hello world with user-frienly url
-	"Hello #{n}!"
-end
+# Browse message in array.
+get('/stream/') { "<a href='/stream/1'>Go to first stream page!</a>" }
