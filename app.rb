@@ -12,6 +12,7 @@ Message: <input name="msg" value="" size="140"><br>
 <br\>
 <a href=\"/stream/\">Look a stream!</a>
 TEXT
+form.freeze
 $home = "<a href=\"/\">Go to home!</a>"
 $home.freeze
 # General array of messages
@@ -29,11 +30,18 @@ def page_messages(n)
 	s = String.new
 	if n.integer? and n>0 and $msgs.length >= (n-1) * 10
 		$msgs.reverse[(n*10)-10...n*10].each_with_index do |item, index|
-			s << "#{index} # Name: #{item[0]}<br/>Time: #{item[1]}<br>Message: #{item[2]}<br/><br/>"
+			s << "#{$msgs.length - index} # Name: #{item[0]}<br/>Time: #{item[1]}<br>Message: #{item[2]}<br/><br/>"
+		end
+		# added link to next/previous page
+		if (n != 1)
+			s << "<a href='/stream/#{n-1}'>\<\<Back |</a>"
+		end
+		if (($msgs.length/10)+1 > n)
+			s << "<a href='/stream/#{n+1}'>Next\>\><br/></a>"
 		end
 		s << $home << "<br/>"
 	else
-		s = "Page not found!"
+		s = "Page not found!#{$home}"
 	end
 	s
 end
