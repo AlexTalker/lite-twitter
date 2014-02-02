@@ -5,11 +5,11 @@ require 'sinatra'
 # TODO: rewrite it to class
 form = <<TEXT
 <form action="/post" method="POST">
-Name: <input name="name" value="" size="10"><br> 
-Message: <input name="msg" value="" size="140"><br>
-<center><input type="submit"></center>
+Name: <input name="name" value="" size="10"><br/> 
+Message: <input name="msg" value="" size="140"><br/>
+<input type="submit">
 </form>
-<br\>
+<br/>
 <a href=\"/stream/\">Look a stream!</a>
 TEXT
 form.freeze
@@ -17,6 +17,14 @@ $home = "<a href=\"/\">Go to home!</a>"
 $home.freeze
 # General array of messages
 $msgs = Array.new
+
+# added a explot guard
+
+helpers do
+  def h(text)
+    Rack::Utils.escape_html(text)
+  end
+end
 
 # class Stream
 # 	def each
@@ -57,7 +65,7 @@ post '/post' do
 	unless params[:name].empty? and params[:msg].empty?
 	  if params[:msg].length <= 140 and params[:name]. length <= 10
 	    # if every right, added in array messages
-	    $msgs << [params[:name], time,params[:msg]]
+	    $msgs << [h(params[:name]), time,h(params[:msg])]
 	    "Send success!#{$home}"
 	  else
 	    "Error! Big message or name: #{params[:name]} say \"#{params[:msg]}\"<br/>#{$home}}"
