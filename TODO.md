@@ -1,6 +1,7 @@
 TODO:
 ===================
 
+- Learning ERB, try used it for make elegant ruby code and compress usage html.
 - Added a work with sqlite, for example
 - Added a markdown
 - Make a class Page, for make page framework fast.
