@@ -1,27 +1,9 @@
-<!doctype html>
-
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Page <%=n%></title>
-  <meta name="description" content="twitter">
-  <meta name="author" content="AlexTalker">
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
-  <!--[if lt IE 9]>
-  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-</head>
-
-<body>
   <%$msgs.reverse[(n*10)-10...n*10].each_with_index do |item, index|%>
     <%=($msgs.length - ((n*10)-10) - index)%> # Name: <%=item[0]%><br/>Time: <%=item[1]%><br>Message: <%=item[2]%><br/><br/>
   <%end%>
   <%if (n != 1)%>
-    <a href='/stream/<%=n-1%>'><%=h("<<Back ")%></a>
+    <a href='/stream/<%=n-1%>'>&lt&ltBack</a>
   <%end%>
   <%if (($msgs.length/10)+1 > n)%>
-    <a href='/stream/<%=n+1%>'> Next>><br/></a>
+    <a href='/stream/<%=n+1%>'> Next&gt&gt<br/></a>
   <%end%>
-  <br/><a href='/'>Go to home!</a>
-</body>
-</html>

@@ -36,7 +36,7 @@ def page_messages(n)
 	n = n.to_i
 	s = String.new
 	if n.integer? and n>0 and $msgs.length >= (n-1) * 10
-		s << (erb :message, :locals => {:n => n})
+		s << (erb :page, :locals => {:n => n, :page => :message,:title => "Page #{n}"})
 	else
 		s = "Page not found!#{Home}"
 	end
@@ -69,4 +69,4 @@ get '/stream/:page' do
 end
 
 # Browse message in array.
-get('/stream/') { "<a href='/stream/1'>Go to first stream page!</a>" }
+get('/stream/') { redirect to('/stream/1') }
