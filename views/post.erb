@@ -1,0 +1,10 @@
+	<%unless (params[:name].empty?) or (params[:msg].empty?)%>
+	  <%if params[:msg].length <= 140 and params[:name].length <= 10%>
+	    <%$msgs << [h(params[:name]), time,h(params[:msg])]%>
+	    Send success!
+	  <%else%>
+	    Error! Big message or name: <%=params[:name]%> <br/> <%params[:msg]%><br/>
+	  <%end%>
+	<%else%>
+	   Empty!
+	<%end%>

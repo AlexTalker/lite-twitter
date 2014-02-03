@@ -13,7 +13,9 @@
 </head>
 
 <body>
-  <%=h(erb :page)%>
-  <br/><a href='/'>Go to home!</a>
+  <%=yield%>
+  <%if request.fullpath =~ /\/?*\/*/%>
+    <br/><a href='/'>Go to home!</a>
+  <%end%>
 </body>
 </html>

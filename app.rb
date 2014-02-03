@@ -3,18 +3,6 @@ require 'rubygems'
 require 'erb'
 require 'sinatra'
 
-# TODO: rewrite it to class
-Form = <<TEXT
-<form action="/post" method="POST">
-Name: <input name="name" value="" size="10"><br/> 
-Message: <input name="msg" value="" size="140"><br/>
-<input type="submit">
-</form>
-<br/>
-<a href=\"/stream/\">Look a stream!</a>
-TEXT
-Home = "<a href=\"/\">Go to home!</a>"
-# General array of messages
 $msgs = Array.new
 
 # added a explot guard
@@ -36,7 +24,7 @@ def page_messages(n)
 	n = n.to_i
 	s = String.new
 	if n.integer? and n>0 and $msgs.length >= (n-1) * 10
-		s << (erb :page, :locals => {:n => n, :page => :message,:title => "Page #{n}"})
+		s << (erb :message, :layout => :page, :locals => {:n => n, :page => :message,:title => "Page #{n}"})
 	else
 		s = "Page not found!#{Home}"
 	end
@@ -45,23 +33,11 @@ end
 
 get '/' do
 #  draw a form to input message
-	Form
+	erb :form, :layout => :page
 end
 
 post '/post' do
-  # check information, sended in form, to valid
-	time = Time.now
-	unless params[:name].empty? and params[:msg].empty?
-	  if params[:msg].length <= 140 and params[:name]. length <= 10
-	    # if every right, added in array messages
-	    $msgs << [h(params[:name]), time,h(params[:msg])]
-	    "Send success!#{Home}"
-	  else
-	    "Error! Big message or name: #{params[:name]} say \"#{params[:msg]}\"<br/>#{Home}}"
-	  end
-	else
-	  "Empty!#{Home}"
-	end
+	erb :post, :layout => :page, :locals => {:time => Time.now}
 end
 
 get '/stream/:page' do
