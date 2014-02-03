@@ -36,18 +36,7 @@ def page_messages(n)
 	n = n.to_i
 	s = String.new
 	if n.integer? and n>0 and $msgs.length >= (n-1) * 10
-		$msgs.reverse[(n*10)-10...n*10].each_with_index do |item, index|
-#			s << "#{$msgs.length - index} # Name: #{item[0]}<br/>Time: #{item[1]}<br>Message: #{item[2]}<br/><br/>"
-			s << (erb :message, :locals => {:index => index, :item=>item})
-		end
-		# added link to next/previous page
-		if (n != 1)
-			s << "<a href='/stream/#{n-1}'>\<\<Back |</a>"
-		end
-		if (($msgs.length/10)+1 > n)
-			s << "<a href='/stream/#{n+1}'>Next\>\><br/></a>"
-		end
-		s << Home << "<br/>"
+		s << (erb :message, :locals => {:n => n})
 	else
 		s = "Page not found!#{Home}"
 	end
