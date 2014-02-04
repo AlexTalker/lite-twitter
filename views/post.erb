@@ -3,7 +3,9 @@
 	    <%$msgs << [h(params[:name]), time,h(params[:msg])]%>
 	    Send success!
 	  <%else%>
-	    Error! Big message or name: <%=params[:name]%> <br/> <%params[:msg]%><br/>
+	    Error! Big message or name!<br/>
+	    <%session[:name] = params[:name]%>
+	    <%session[:msg] = params[:msg]%>
 	  <%end%>
 	<%else%>
 	   Empty!

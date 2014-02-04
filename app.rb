@@ -22,18 +22,16 @@ end
 # 	end
 # end
 get '/' do
-#  draw a form to input message
-# 	erb :notification, :locals => {:title => "Home page."} do
-# 		erb :form
-# 	end
+	session[:name] = ""
+	session[:msg] = ""
 	redirect to('/stream')
 end
 
 post '/post' do
 	session[:notification] = (erb :post, :locals => {:time => Time.now}, :layout => false).to_s
-	redirect to('/')
+	redirect to('/stream/')
 end
-
+# Stream messages page
 get '/stream/:page' do
 
 	n = params[:page].to_i
@@ -44,7 +42,6 @@ get '/stream/:page' do
 	end
 end
 
-# Browse message in array.
 get('/stream/?') { redirect to('/stream/1') }
 
 error 404 do
