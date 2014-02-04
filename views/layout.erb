@@ -14,7 +14,7 @@
 
 <body>
   <%=yield%>
-  <%if request.fullpath =~ /\/?*\/*/%>
+  <%unless request.fullpath == '/'%>
     <br/><a href='/'>Go to home!</a>
   <%end%>
 </body>

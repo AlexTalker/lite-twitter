@@ -22,16 +22,15 @@ end
 # 	end
 # end
 
-def page_messages(n)
-	n = n.to_i
-	s = String.new
-	if n.integer? and n>0 and $msgs.length >= (n-1) * 10
-		s << (erb :message, :locals => {:n => n, :page => :message,:title => "Page #{n}"})
-	else
-		s = "Page not found!"
-	end
-	s
-end
+# def page_messages(n)
+# 	n = n.to_i
+# 	s = String.new
+# 	if (n.integer?) and (n>0) and ($msgs.length >= ((n-1) * 10))
+# 		s << (erb :message, :locals => {:n => n, :page => :message,:title => "Page #{n}"})
+# 	else
+# 		raise 404
+# 	end
+# end
 
 get '/' do
 #  draw a form to input message
@@ -41,16 +40,24 @@ get '/' do
 end
 
 post '/post' do
-# 	erb :notification, :locals => {:notification => (erb :post, :locals => {:time => Time.now}, :layout => false), :title => "Home!"} do
-# 		erb :form
-# 	end
 	session[:notification] = (erb :post, :locals => {:time => Time.now}, :layout => false).to_s
 	redirect to('/')
 end
 
 get '/stream/:page' do
-	page_messages(params[:page])
+# 	page_messages(params[:page])
+	n = params[:page].to_i
+# 	s = String.new
+	if (n.integer?) and (n>0) and ($msgs.length >= ((n-1) * 10))
+		erb :message, :locals => {:n => n, :page => :message,:title => "Page #{n}"}
+	else
+		halt 404
+	end
 end
 
 # Browse message in array.
-get('/stream/') { redirect to('/stream/1') }
+get('/stream/?') { redirect to('/stream/1') }
+
+error 404 do
+	erb :not_found
+end
