@@ -59,5 +59,5 @@ end
 get('/stream/?') { redirect to('/stream/1') }
 
 error 404 do
-	erb :not_found
+	erb :not_found, :layout => false
 end
