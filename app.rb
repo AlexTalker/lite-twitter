@@ -3,6 +3,8 @@ require 'rubygems'
 require 'erb'
 require 'sinatra'
 
+enable :sessions
+
 $msgs = Array.new
 
 # added a explot guard
@@ -24,20 +26,26 @@ def page_messages(n)
 	n = n.to_i
 	s = String.new
 	if n.integer? and n>0 and $msgs.length >= (n-1) * 10
-		s << (erb :message, :layout => :page, :locals => {:n => n, :page => :message,:title => "Page #{n}"})
+		s << (erb :message, :locals => {:n => n, :page => :message,:title => "Page #{n}"})
 	else
-		s = "Page not found!#{Home}"
+		s = "Page not found!"
 	end
 	s
 end
 
 get '/' do
 #  draw a form to input message
-	erb :form, :layout => :page
+	erb :notification, :locals => {:title => "Home page."} do
+		erb :form
+	end
 end
 
 post '/post' do
-	erb :post, :layout => :page, :locals => {:time => Time.now}
+# 	erb :notification, :locals => {:notification => (erb :post, :locals => {:time => Time.now}, :layout => false), :title => "Home!"} do
+# 		erb :form
+# 	end
+	session[:notification] = (erb :post, :locals => {:time => Time.now}, :layout => false).to_s
+	redirect to('/')
 end
 
 get '/stream/:page' do
