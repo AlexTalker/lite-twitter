@@ -17,6 +17,6 @@ end
 
 def last_post_id
     Sequel.connect(DB) do |db|
-	db[:posts].order(:id).last[:id]
+	db[:posts].max(:id)
     end
 end
