@@ -1,12 +1,9 @@
 #!/usr/bin/env ruby
-require 'rubygems'
 require 'erb'
 require 'sinatra'
-require './posts'
+require_relative 'posts'
 
 enable :sessions
-
-$msgs = Array.new
 
 # added a explot guard
 
