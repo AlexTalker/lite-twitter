@@ -10,11 +10,8 @@ end
 def get_posts(range)
     Sequel.connect(DB) do |db|
 	posts = db[:posts]
-	array = db.where(:id => range)
-	unless array.empty?
-	    return array
-	end
-	else return nil
+	array = posts.where(:id => range)
+	array.all
     end
 end
 

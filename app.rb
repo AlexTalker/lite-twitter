@@ -2,6 +2,7 @@
 require 'rubygems'
 require 'erb'
 require 'sinatra'
+require './posts'
 
 enable :sessions
 
@@ -35,7 +36,7 @@ end
 get '/stream/:page' do
 
 	n = params[:page].to_i
-	if (n.integer?) and (n>0) and ($msgs.length >= ((n-1) * 10))
+	if (n.integer?) and (n>0) and (last_post_id >= ((n-1) * 10))
 		erb :stream, :locals => {:n => n, :title => "Page #{n}"}
 	else
 		halt 404
