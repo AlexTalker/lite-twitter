@@ -1,3 +1,12 @@
 <%=erb :notification%>
 <%=erb :form%>
-<%=erb :message, :locals => {:n => n}%>
+<!--<%=erb :message, :locals => {:n => n}%>-->
+<%get_posts(last_post_id-(last_post_id*(n-1))-10..last_post_id-(last_post_id*(n-1))).reverse.each do |item|%>
+  <%=erb :message, :layout => false,:locals => {:id => item[:id], :name => item[:name], :time => item[:time], :msg => item[:msg]}%>
+<%end%>
+<%if (n != 1)%>
+  <a href='/stream/<%=n-1%>'>&lt&ltBack</a>
+<%end%>
+<%if ((last_post_id/10)+1 > n)%>
+  <a href='/stream/<%=n+1%>'> Next&gt&gt<br/></a>
+<%end%>

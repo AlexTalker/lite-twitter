@@ -1,9 +1,3 @@
-  <%get_posts((last_post_id-10)..last_post_id).reverse.each do |item|%>
-    <%=(item[:id])%> # Name: <%=item[:name]%><br/>Time: <%=item[:time]%><br>Message: <%=item[:msg]%><br/><br/>
-  <%end%>
-  <%if (n != 1)%>
-    <a href='/stream/<%=n-1%>'>&lt&ltBack</a>
-  <%end%>
-  <%if ((last_post_id/10)+1 > n)%>
-    <a href='/stream/<%=n+1%>'> Next&gt&gt<br/></a>
-  <%end%>
+<%=:id%> # Name: <%=:name%><br/>
+Time: <%=:time%><br/>
+Message: <%=:msg%><br/>

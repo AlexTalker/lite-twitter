@@ -1,13 +1,13 @@
-	<%unless (params[:name].empty?) or (params[:msg].empty?)%>
-	  <%if params[:msg].length <= 140 and params[:name].length <= 10%>
-	    <%added_message(h(params[:name]), h(params[:msg]))%>
-	    <%session[:name] = params[:name]%>
-	    Send success!
-	  <%else%>
-	    Error! Big message or name!<br/>
-	    <%session[:name] = params[:name]%>
-	    <%session[:msg] = params[:msg]%>
-	  <%end%>
-	<%else%>
-	   Empty!
-	<%end%>
+<%unless (params[:name].empty?) or (params[:msg].empty?)%>
+  <%if params[:msg].length <= 140 and params[:name].length <= 10%>
+    <%added_message(h(params[:name]), h(params[:msg]))%>
+    <%session[:name] = params[:name]%>
+    Send success!
+  <%else%>
+    Error! Big message or name!<br/>
+    <%session[:name] = params[:name]%>
+    <%session[:msg] = params[:msg]%>
+  <%end%>
+<%else%>
+    Empty!
+<%end%>
