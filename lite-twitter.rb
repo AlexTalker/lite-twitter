@@ -19,12 +19,34 @@ end
 # 		"<a href='/stream/1'>Go to first stream page!</a>"
 # 	end
 # end
+
+def notification(text)
+	session[:notification] = text
+end
+
 get '/' do
 	redirect to('/stream')
 end
 
+get '/notification/' do
+	session[:notification] = nil
+	redirect to('/stream/1')
+end
+
 post '/post' do
-	session[:notification] = (erb :post, :locals => {:time => Time.now}, :layout => false).to_s
+	unless (params[:name].empty?) or (params[:msg].empty?)
+		if params[:msg].length <= 140 and params[:name].length <= 10
+			added_message(h(params[:name]), h(params[:msg]))
+			session[:name] = params[:name]
+			notification("Send success!")
+		else
+			notification("Big message or name!<br/>")
+			session[:name] = params[:name]
+			session[:msg] = params[:msg]
+		end
+	else
+		notification("Empty!")
+	end
 	redirect to('/stream/')
 end
 # Stream messages page
