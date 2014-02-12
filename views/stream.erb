@@ -1,12 +1,11 @@
 <%=erb :notification%>
 <%=erb :form%>
 <%@messages.each do |item|%>
-  <%@item = item%>
-  <%=erb :message, :layout => false%>
+  <%=erb :message, :layout => false, :locals => {:item => item}%>
 <%end%>
-<%if n != 1%>
-  <a href='/stream/<%=n-1%>'>&lt&ltBack</a>
+<%if page != 1%>
+  <a href='/stream/<%=page-1%>'>&lt&ltBack</a>
 <%end%>
-<%if (last_post_id/10)+1 > n%>
-  <a href='/stream/<%=n+1%>'> Next&gt&gt<br/></a>
+<%if (last_post_id/10)+1 > page%>
+  <a href='/stream/<%=page+1%>'> Next&gt&gt<br/></a>
 <%end%>

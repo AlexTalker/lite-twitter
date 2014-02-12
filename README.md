@@ -16,10 +16,11 @@ Then exec file install.rb in project directory
 - Sinatra
 - Rubygems
 - Sequel
+- SQLite 3
 
 **Run**
 
-'ruby ./app.rb' and look app on http://localhost:4567
+'ruby ./lite-twitter.rb' and look app on http://localhost:4567 or open project in kdevelop, setup script running and press Shift+f9
 
 License
 ============
