@@ -34,20 +34,18 @@ get '/notification/' do
 end
 
 post '/post' do
+	session[:name] = params[:name]
 	unless (params[:name].empty?) or (params[:msg].empty?)
 		if params[:msg].length <= 140 and params[:name].length <= 10
 			added_message(h(params[:name]), h(params[:msg]))
-			session[:name] = params[:name]
 			notification("Send success!")
+			redirect to('/stream/')
 		else
-			notification("Big message or name!<br/>")
-			session[:name] = params[:name]
-			session[:msg] = params[:msg]
+			erb :post, :locals => {:msg => params[:msg], :error => "Big message or name!<br/>", :title => "Error!" }
 		end
 	else
-		notification("Empty!")
+		erb :post, :locals => {:msg => params[:msg], :error => "Empty!", :title => "Error!" }
 	end
-	redirect to('/stream/')
 end
 # Stream messages page
 get '/stream/:page' do

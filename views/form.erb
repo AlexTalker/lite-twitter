@@ -1,6 +1,6 @@
 <form action='/post' method='POST'>
 Name: <input name='name' value='<%=session[:name]%>' size='10'><br/> 
-Message: <input name='msg' value='<%=session[:msg]%>' size='140'><br/>
+Message: <input name='msg' value='<%if defined?(msg)%><%=msg%><%end%>' size='140'><br/>
 <input type='submit'>
 </form>
 <br/>
