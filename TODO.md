@@ -6,3 +6,4 @@ TODO:
 - Added a markdown
 - Make a class Page, for make page framework fast.
 - Added a registration etc
+- Make @name and #tags, also optionally - markdown in message
