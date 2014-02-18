@@ -1,0 +1,11 @@
+<%=erb :notification%>
+<%=erb :form%>
+<%@messages.each do |item|%>
+  <%=erb :message, :layout => false, :locals => {:item => item}%>
+<%end%>
+<%if page != 1%>
+  <a href='/name/<%=page-1%>'>&lt&ltBack</a>
+<%end%>
+<%if (user_posts/10)+1 > page%>
+  <a href='/name/<%=page+1%>'> Next&gt&gt<br/></a>
+<%end%>

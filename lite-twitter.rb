@@ -60,6 +60,24 @@ get '/stream/:page' do
 	end
 end
 
+get '/name/:name/' do
+	redirect to("/name/#{params[:name]}/1")
+end
+
+get '/name/:name/:page' do
+	page = params[:page].to_i
+	count = last_user_post_id(params[:name])
+	if count == nil
+		notification("User not found!")
+		redirect to('/stream/')
+	elsif (page.integer?) and (page>0) and (count >= ((page-1) * 10))
+		@messages = get_posts_by_user(params[:name],page)
+		erb :user, :locals => {:page => page, :title => "Page #{page}", :user_posts => count}
+	else
+		halt 404
+	end
+end
+
 get('/stream/?') { redirect to('/stream/1') }
 
 error 404 do
