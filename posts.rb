@@ -13,13 +13,13 @@ end
 
 def get_posts_by_user(name, page = 1)
     #return user posts
-      DB[:posts].select(:id, :time, :name, :msg).where(:name => name).limit(10).offset((page.to_i-1)*10).all.reverse
+      DB[:posts].select(:id, :time, :name, :msg).where(:name => name).order(:id).limit(10).offset((page.to_i-1)*10).all.reverse
 end
 
 def get_posts_by_tag(tag, page = 1)
     #return posts included #tag
 # 	posts = db['select id, time, name, msg from posts where msg like ? limit 10 offset ?', '%#'+tag+'%',(page.to_i-1)*10]
-      DB[:posts].select(:id, :time, :name, :msg).where(Sequel.like(:msg, '%#'+tag+'%')).limit(10).offset((page.to_i-1)*10).all.reverse
+      DB[:posts].select(:id, :time, :name, :msg).where(Sequel.like(:msg, '%#'+tag+'%')).order(:id).limit(10).offset((page.to_i-1)*10).all.reverse
 end
 
 def last_tag_post_id(tag)
