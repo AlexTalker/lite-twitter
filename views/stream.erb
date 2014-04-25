@@ -6,6 +6,6 @@
 <%if page != 1%>
   <a href='/stream/<%=page-1%>'>&lt&ltBack</a>
 <%end%>
-<%if (last_post_id/10)+1 > page%>
+<%if (@last_post_id/10)+1 > page%>
   <a href='/stream/<%=page+1%>'> Next&gt&gt<br/></a>
 <%end%>
