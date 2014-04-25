@@ -1,2 +1,4 @@
 *.db
 .kdev4/*
+.*
+!.project
